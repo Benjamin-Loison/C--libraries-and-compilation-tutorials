@@ -1,0 +1,7 @@
+petit supplément pour tester l appli depuis le serveur via ssh
+1:depuis l'ordinateur windows telecharger et installer wming : https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiHyJG6yczTAhWJ1BoKHc5WBzsQFggnMAA&url=http%3A%2F%2Fwww.clubic.com%2Ftelecharger-fiche190662-xming.html&usg=AFQjCNF9OHZxRxTgIfAKFCN6IYjoEMge-A&sig2=Bv-zYyNOm1-ywrlMkKDTZw
+2:sur le serveur taper : sudo apt-get install wine
+3:attendre...
+4:se placer dans le dossier ou il y a le fichier .exe compilé : cd ~/essai
+5:ouvrir le fichier : wine <nomdufichier>.exe
+6:normalement un fenetre s ouvre avec le triangle

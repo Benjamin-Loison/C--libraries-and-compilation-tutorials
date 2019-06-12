@@ -1,0 +1,59 @@
+1:telecharger CodeBlocks avec Mingw http://www.codeblocks.org/downloads/26 (codeblocks-16.01mingw-setup.exe).
+2:installer
+3:telecharger la bblioteque SDL https://www.libsdl.org/download-2.0.php (SDL2-devel-2.0.5-mingw.tar.gz dans development librairies)
+4:decompresser et placer dans C:/Librairies
+5:ouvrir CodeBlocks
+6:creer un nouveau projet(empty project)
+7:faire un clic droit sur le projet a gauche et aller dans properties
+8:aller dans build target et cocher GUI application(dans debug et release) puis appuyer sur ok
+9:aller dans settings>compiler
+10:dans linker settings ajouter -lmingw32, -lSDL2main, -lSDL2, -lopengl32, -lglu32
+11:dans search directories>compiler appuyez sur add et ajouter le dosier SDL2 dans le dossier include de i686-w64-mingw32 du dossier SDL normalement placé dans C:/Librairies (vous devriez avoir quelque chose comme C:\Librairies\SDL2-2.0.5\i686-w64-mingw32\include\SDL2)
+12:dans search directories>linker ajoutez pareillement le dossier lib de la SDL(toujours la version i686-w64-mingw32)
+13:cliquez sur ok
+14:creez un nouveau fichier dans le projet
+15:collez ce code dedans:
+    #include <SDL.h>
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+
+    int main(int argc, char *argv[])
+    {
+        SDL_Init(SDL_INIT_VIDEO);
+        SDL_Window *screen = SDL_CreateWindow("Ma fenetre de jeu",
+                              SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED,
+                              640, 480,
+                              SDL_WINDOW_OPENGL);
+        SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
+
+        bool continuer = true;
+        SDL_Event event;
+
+        while (continuer)
+        {
+            SDL_WaitEvent(&event);
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    continuer = false;
+            }
+
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            glBegin(GL_TRIANGLES);
+                glColor3ub(255,0,0);    glVertex2d(-0.75,-0.75);
+                glColor3ub(0,255,0);    glVertex2d(0,0.75);
+                glColor3ub(0,0,255);    glVertex2d(0.75,-0.75);
+            glEnd();
+
+            glFlush();
+            SDL_GL_SwapWindow(screen);
+        }
+
+        SDL_Quit();
+
+        return 0;
+    }
+ puis compilez et executez. Vous devriez voir apparaitre un triangle multicolore
+ 16:si il y a une erreur reprenez toutes les etapes depuis le telechargement de la SDL.

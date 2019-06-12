@@ -1,0 +1,23 @@
+installation de SDL_ttf:
+1:se placer dans son dossier : cd ~
+2:recuperer SDL_ttf : wget https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-mingw.tar.gz
+3:decompresser l archive : tar -xvf SDL2_ttf-devel-2.0.14-mingw.tar.gz
+4:aller dans le dossier : cd SDL2_ttf-2.0.14/x86_64-w64-mingw32/include/SDL2
+5:deplacer le .h dans le dossier du compileur : sudo cp * /usr/x86_64-w64-mingw32/include/SDL2
+6:cd ../../lib
+7:sudo cp libSDL2_ttf.a libSDL2_ttf.dll.a libSDL2_ttf.la /usr/x86_64-w64-mingw32/lib
+8:cd ../bin
+9:on deplace les dll vers le dossier du programme : cp libfreetype-6.dll zlib1.dll SDL2_ttf.dll ~/essai
+10:lors de la compilation rajouter l option -lSDL2_ttf
+
+installation de SDL_image:
+1:venir dans le dossier  cd ~
+2:recupere l archive : wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.1-mingw.tar.gz
+3:decompresser l archive : tar -xvf SDL2_image-devel-2.0.1-mingw.tar.gz
+4:cd SDL2_image-2.0.1/x86_64-w64-mingw32/include/SDL2
+5:sudo cp * /usr/x86_64-w64-mingw32/include/SDL2
+6:cd ../../lib
+7:sudo cp libSDL2_image.a libSDL2_image.dll.a libSDL2_image.la /usr/x86_64-w64-mingw32/lib
+8:cd ../bin
+9:cp libjpeg-9.dll libpng16-16.dll libtiff-5.dll libwebp-4.dll zlib1.dll SDL2_image.dll ~/essai
+11:lors de la compilation rajouter l option -lSDL2_image

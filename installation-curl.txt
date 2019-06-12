@@ -1,0 +1,38 @@
+1: telecharger curl https://bintray.com/artifact/download/vszakats/generic/curl-7.54.1-win32-mingw.7z
+2: decompresser dans C:/Librairies
+3: aller dans include>curl et copier tous les .h dans include>sdl2 du compilateur(i686)
+4: aller dans lib et copier les deux .a dans le dossier lib du compilateur(i686)
+5: aller dans bin et copier le dll dans le dossier du projet codeblocks
+6: dans codeblocks aller dans settings>compiler>Linker Settings et rajouter -lcurl
+7: telecharger http://slproweb.com/download/Win32OpenSSL-1_1_0f.exe
+8: executer ET PENDANT L'INSTALLATION COCHER METTRE LES DLL DANS LE DOSSIER BIN DE OPENSSL
+9: aller dans c:/OpenSSL-Win32/bin et copier tous les .dll dans C:/Program Files/Codeblocks/Mingw/bin
+10: executer ce code pour tester curl:
+#include <iostream>
+#include <string>
+#include <curl.h>
+
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
+int main(void)
+{
+  CURL *curl;
+  CURLcode res;
+  std::string readBuffer;
+
+  curl = curl_easy_init();
+  if(curl) {
+    curl_easy_setopt(curl, CURLOPT_URL, "http://www.google.com");
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+
+    std::cout << readBuffer << std::endl;
+  }
+  return 0;
+}

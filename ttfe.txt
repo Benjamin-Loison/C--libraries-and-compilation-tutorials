@@ -1,0 +1,67 @@
+1:telecharger sdl_ttf : https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-mingw.tar.gz
+2:decompresser et l ouvrir
+3:aller dans include/SDL2(i686) et bouger SDL_ttf.h dans le dossier avec les include de SDL(version 1686)
+4:aller dans lib et copier les fichier .a .la et .dll.a dans lib du dossier du compileur(toujours version 1686)
+5:finalement aller dans bin et copier les dll dans le dossier du projet
+6:telecharger sdl_image : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.1-mingw.tar.gz
+7:decompresser
+8:refaire les etapes 3 a 5 mais avec les fichiers de SDL_image
+9:ouvrir le projet et copier ce code dedans:
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+
+int main (int argc, char** argv)
+{
+
+    SDL_Window *ecran = NULL;
+    SDL_Surface *texte = NULL, *fond = NULL;
+    SDL_Rect position;
+    SDL_Event event;
+    TTF_Font *police = NULL;
+    SDL_Color couleurNoire = {0, 0, 0};
+    int continuer = 1;
+
+    SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
+
+
+    ecran = SDL_CreateWindow("test", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    SDL_Surface *pSurf = SDL_GetWindowSurface(ecran);
+
+    fond = IMG_Load("essai1.png");
+
+
+    police = TTF_OpenFont("arial.ttf", 55);
+    texte = TTF_RenderText_Blended(police, "al", couleurNoire);
+
+    while (continuer)
+    {
+    SDL_WaitEvent(&event);
+    switch(event.type)
+    {
+        case SDL_QUIT:
+        continuer = 0;
+        break;
+    }
+        SDL_FillRect(pSurf, NULL, SDL_MapRGB(pSurf->format, 255, 255, 255));
+        position.x = 0;
+        position.y = 0;
+        SDL_BlitSurface(fond, NULL, pSurf, &position);
+        position.x = 60;
+        position.y = 370;
+        SDL_BlitSurface(texte, NULL, pSurf, &position);
+        SDL_UpdateWindowSurface(ecran);
+        }
+    TTF_CloseFont(police);
+    TTF_Quit();
+
+    SDL_FreeSurface(texte);
+    SDL_Quit();
+
+    return EXIT_SUCCESS;
+}
+
+10:avant de compiler aller dans settings>compiler et rajouter -lSDL2_ttf et -lSDL2_image dans les linker settings
+11:ne pas oublier de mettre la police et l image dans le dossier du projet
+12:compiler et c est fini!

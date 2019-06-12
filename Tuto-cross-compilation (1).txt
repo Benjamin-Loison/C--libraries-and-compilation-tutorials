@@ -1,0 +1,61 @@
+﻿1:installer le cross compileur : sudo apt-get install mingw-w64
+2:se mettre dans le repertoire courant : cd ~
+3:telecharger sdl(version windows) pour linux : wget https://www.libsdl.org/release/SDL2-devel-2.0.5-mingw.tar.gz
+4:ouvrir l archive : tar -xvf SDL2-devel-2.0.5-mingw.tar.gz
+5:se placer dans le fichier crée : cd SDL2-2.0.5/x86_64-w64-mingw32
+6:copier les .h dans le dossier du compilateur : cp include/* /usr/x86_64-w64-mingw32/include
+7:aller dans le fichier lib : cd lib
+8:copier les lib dans le dossier du compilateur : cp libSDL2.dll.a libSDL2main.a libSDL2.a libSDL2.la libSDL2_test.a /usr/x86_64-w64-mingw32/lib
+9:aller dans son repertoire courant : cd ~
+10:creer un dossier pour le projet : mkdir essai
+11:aller dans ce dossier : cd essai
+12:creer un fichier dedans:sudo touch essai.cpp
+13:changer les droits de ce fichier : sudo chmod 777 essai.cpp
+14:copier le dll dans le dossier : sudo cp ~/SDL2-2.0.5/x86_64-w64-mingw32/bin/SDL2.dll ~/essai
+15:ouvrir le fichier .cpp : nano essai.cpp
+16:coller ce texte dedans :     
+	#include <SDL2/SDL.h>
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+
+    int main(int argc, char *argv[])
+    {
+        SDL_Init(SDL_INIT_VIDEO);
+        SDL_Window *screen = SDL_CreateWindow("Ma fenetre de jeu",
+                              SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED,
+                              640, 480,
+                              SDL_WINDOW_OPENGL);
+        SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
+
+        bool continuer = true;
+        SDL_Event event;
+
+        while (continuer)
+        {
+            SDL_WaitEvent(&event);
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    continuer = false;
+            }
+
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            glBegin(GL_TRIANGLES);
+                glColor3ub(255,0,0);    glVertex2d(-0.75,-0.75);
+                glColor3ub(0,255,0);    glVertex2d(0,0.75);
+                glColor3ub(0,0,255);    glVertex2d(0.75,-0.75);
+            glEnd();
+
+            glFlush();
+            SDL_GL_SwapWindow(screen);
+        }
+
+        SDL_Quit();
+
+        return 0;
+    }
+17:le compiler :  x86_64-w64-mingw32-g++ -W -o essai.exe essai.cpp -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglu32 -mwindows
+18:le tester sous windows, il devrait faire apparaitre un triangle multicolore
+19:s'il y a un probleme dans la compilation ou autre revenir au debut du tutoriel et refaire toutes les etapes attentivement
