@@ -1,4 +1,4 @@
-# C-Libraries-and-compilatio-tutorials
+# C++ libraries and compilation tutorials
 Libraries: curl, SDL (ttf, image), OpenGL and also cross compilation (from Linux to Windows)
 
 These libraries tutorials were designed for Windows.
